@@ -23,25 +23,10 @@ services:
           name: lightning
           property: port
       - fromGroup: conc-settings
-  # A private Minio instance
-  - type: pserv
-    name: minio
-    env: docker
-    repo: https://github.com/render-examples/minio.git # optional
-    envVars:
-      - key: MINIO_ROOT_PASSWORD
-        generateValue: true # will generate a base64-encoded 256-bit secret
-      - key: MINIO_ROOT_USER
-        sync: false # placeholder for a value to be added in the dashboard
-      - key: PORT
-        value: 10000
-    disk:
-      name: data
-      mountPath: /data
-      sizeGB: 10 # optional
   # A Ruby web service
   - type: web
     name: sinatra
+    plan: free
     env: ruby
     repo: https://github.com/renderinc/sinatra-example.git
     scaling:
@@ -61,13 +46,6 @@ services:
         fromDatabase:
           name: elephant
           property: connectionString
-      - key: MINIO_ROOT_PASSWORD
-        fromService:
-          type: pserv
-          name: minio
-          envVarKey: MINIO_ROOT_PASSWORD
-
-    autoDeploy: false # optional
   # A Python cron job that runs every hour
   - type: web
     name: my blog
@@ -97,6 +75,7 @@ services:
 
 databases:
   - name: elephant
+    plan: free
     databaseName: mydb # optional (Render may add a suffix)
     user: adrian # optional
     ipAllowList: # optional (defaults to allow all)
@@ -106,6 +85,7 @@ databases:
         description: home
 
   - name: private database
+    plan: free
     databaseName: private
     ipAllowList: [] # only allow internal connections
 
