@@ -4,25 +4,25 @@ services:
   - type: web
     name: webdis
     env: docker
-    repo: https://github.com/render-examples/webdis.git # optional
+    repo: https://github.com/containous/whoami # optional
     region: oregon # optional (defaults to oregon)
     plan: free # optional (defaults to starter)
     branch: master # optional (defaults to master)
-    dockerCommand: ./webdis.sh # optional (defaults to Dockerfile command)
-    numInstances: 3 # optional (defaults to 1)
-    healthCheckPath: /
-    envVars:
-      - key: REDIS_HOST
-        fromService:
-          type: redis
-          name: lightning
-          property: host # available properties are listed below
-      - key: REDIS_PORT
-        fromService:
-          type: redis
-          name: lightning
-          property: port
-      - fromGroup: conc-settings
+#    dockerCommand: ./webdis.sh # optional (defaults to Dockerfile command)
+#    numInstances: 3 # optional (defaults to 1)
+#    healthCheckPath: /
+#    envVars:
+#      - key: REDIS_HOST
+#        fromService:
+#          type: redis
+#          name: lightning
+#          property: host # available properties are listed below
+#      - key: REDIS_PORT
+#        fromService:
+#          type: redis
+#          name: lightning
+#          property: port
+#      - fromGroup: conc-settings
 #  - type: web
 #    name: my blog
 #    env: static
